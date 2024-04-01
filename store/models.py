@@ -3,13 +3,38 @@ import datetime
 
 #Categories of Products
 class Category(models.Model):
-    name = models.CharField(max_length=50)
-    
+    name = models.CharField(max_length=50, unique=True)
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
+
     def __str__(self):
-        return self.name   
-    
+        return self.name
+
     class Meta:
-            verbose_name_plural = 'Categories' 
+        verbose_name_plural = 'Categories'
+
+class ClothingCategory(models.Model):
+    GENDER_CHOICES = (
+        ('M', 'Men'),
+        ('F', 'Female'),
+        ('U', 'Unisex'),
+    )
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    category = models.OneToOneField(Category, on_delete=models.CASCADE, related_name='clothing_category')
+
+    def __str__(self):
+        return f"{self.get_gender_display()} Clothing"
+
+class Subcategory(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+
+    
+   
 
 
 #Customers
@@ -27,7 +52,7 @@ class Customer(models.Model):
 class Product(models.Model):
     name =  models.CharField(max_length=100)
     price =  models.DecimalField(default=0, decimal_places=2, max_digits = 8)
-    category =  models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+    category =  models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     description =  models.CharField(max_length=250, default='', blank = True, null=True)
     image = models.ImageField(upload_to='uploads/product/')
     
