@@ -1,16 +1,46 @@
 from django.db import models
 import datetime
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+
+
+
+#Customer Profile Creation
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE )
+    date_modified = models.DateTimeField(User, auto_now=True)
+    phone = models.CharField(max_length=15, blank=False)  # Phone number of the customer
+    address1 = models.CharField(max_length=200, blank=True)# Address of the customer
+    address2 = models.CharField(max_length=200, blank=True)
+    city = models.CharField(max_length=200, blank=True)
+    state = models.CharField(max_length=200, blank=True)
+    zipcode = models.CharField(max_length=200, blank=True)
+    country = models.CharField(max_length=200, blank=True)
+    
+    def __str__(self):
+        return self.user.username + " profile"
+    
+#Create a user Profile by defaul when user sign ups
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        user_profile = Profile(user=instance)
+        user_profile.save()
+#Automate the profile saving
+post_save.connect(create_profile, sender=User)    
+    
+    
+        
 
 #Categories of Products
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
-
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='children' )
     def __str__(self):
         return self.name
 
     class Meta:
         verbose_name_plural = 'Categories'
+        
 
 class ClothingCategory(models.Model):
     GENDER_CHOICES = (
@@ -22,21 +52,13 @@ class ClothingCategory(models.Model):
     category = models.OneToOneField(Category, on_delete=models.CASCADE, related_name='clothing_category')
 
     def __str__(self):
-        return f"{self.get_gender_display()} Clothing"
-
+        return f"{self.get_gender_display()} Clothing"       
 class Subcategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name 
-
-
-
-    
-   
-
-
 #Customers
 class Customer(models.Model):
     first_name = models.CharField(max_length=50)
@@ -67,7 +89,7 @@ class Product(models.Model):
 
          
 
-#Customer Models
+#Customer Order Models
 class Order(models.Model):
     product = models.ForeignKey(Product, on_delete= models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)

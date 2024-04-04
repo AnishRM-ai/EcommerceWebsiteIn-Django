@@ -84,4 +84,11 @@ class Cart():
         
         
         return total
+    
+    def get_size(self):
+        product_id = self.cart.keys()
+        
+        
+        quantities = self.cart
+        
                     

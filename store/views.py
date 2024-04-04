@@ -61,8 +61,7 @@ def update_user(request):
 
 
 def category_summary(request):
-    categories = Category.objects.all()
-    
+    categories = Category.objects.filter()
     return render(request, 'category_summary.html', {"categories": categories})
 
 def category(request, foo):
@@ -70,9 +69,14 @@ def category(request, foo):
     foo = foo.replace('-', ' ')
     # Grab the category from the url
     try:
-        #Look up the category
         category = Category.objects.get(name=foo)
-        products = Product.objects.filter(category = category)
+        
+        #Look up the category
+        if category.children.exists():
+            child_categories = category.children.all()
+            products = Product.objects.filter(category__in= child_categories)
+        else:
+            products = Product.objects.filter(category = category)
         return render(request, 'category.html', {'products': products, 'category': category})
         
     except:
