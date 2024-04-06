@@ -1,18 +1,45 @@
 from django.shortcuts import render, redirect
 from .models import Product
-from .models import Category
+from .models import Category, Profile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm
+from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm, UserInfoform
 from django import forms
 
 
 
 
-    
-    
+#Update user details
+def update_info(request):
+    if request.user.is_authenticated:
+         try:
+            current_users = Profile.objects.get(user__id=request.user.id)
+         except Profile.DoesNotExist:
+              # Handle the case where the user profile does not exist
+            messages.error(request, "User profile does not exist.")
+            return redirect('home')  # Redirect to home or appropriate page
+        
+         form = UserInfoform(request.POST or None, instance=current_users)
+         if request.method == 'POST':   
+          if form.is_valid():
+            form.save()
+            messages.success(request, "Your Info Has been updated successfully")
+            return redirect('home')
+          else:
+                # Handle the case where form validation fails
+                messages.error(request, "Form is not valid.")
+                # You might want to render the form again to show validation errors.
+                # Example: return render(request, 'update_info.html', {'form': form})
+         else:
+            # If it's not a POST request, just render the form
+            return render(request, 'update_info.html', {'form': form})
+    else:
+        # Handle the case where the user is not authenticated
+        messages.error(request, "You need to be logged in to update your info.")
+        return redirect('login')  # Redirect to login page or appropriate page
+
 #Update password
 def update_password(request):
     if request.user.is_authenticated:
@@ -129,7 +156,7 @@ def register_user(request):
             user = authenticate(username = username, password = password)
             login(request, user)
             messages.success(request, ('Account created successfully'))
-            return redirect('home')
+            return redirect('update_user')
         else: 
             messages.success(request, ("Whoops! There was a problem in registering."))
             return redirect('register')
