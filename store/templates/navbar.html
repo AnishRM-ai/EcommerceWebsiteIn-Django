@@ -31,6 +31,21 @@
                     </ul>
                 </li>
             </ul>
+
+            <!---Search Bar -->
+
+            <div class="mb-3 mx-3 d-flex align-items-center mt-3 mr-3" >
+                <form method="POST" action="{% url 'search' %}" class="d-flex align-items-center flex-grow-1">
+                    {% csrf_token %}
+                  
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Search Products" name="searched">
+                    <button type="submit" class="btn btn-secondary"><i class="bi bi-search"></i></button>
+                  
+                </form>
+              </div>
+
+
+
             <form class="d-flex">
     <a href = "{% url 'cart_summary' %}" class="btn btn-outline-dark"> <i class="bi-cart-fill me-1"></i>
         Cart

@@ -17,9 +17,12 @@
                 
                     {%if category.parent %}
                         {{category.parent.name}}
+
                         <h3><a href="{% url 'category' category %}">{{category}}</a></h3>
+                        
                     {%else%}
                         <h3><a href="{% url 'category' category %}">{{category}}</a></h3>
+                      
                         {%endif%}
                 {%endfor%}
             </div>
