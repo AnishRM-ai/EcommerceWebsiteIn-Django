@@ -4,14 +4,29 @@
 {% block content %}
 
         <!-- Header-->
-        <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Shop in style</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">With LUGAAA Tapaiko Lagi Lmao</p>
-                </div>
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="slide1.jpg" class="d-block w-100" alt="Image 1">
+              </div>
+              <div class="carousel-item">
+                <img src="slide2.png" class="d-block w-100" alt="Image 2">
+              </div>
+              <div class="carousel-item">
+                <img src="slide3.png" class="d-block w-100" alt="Image 3">
+              </div>
             </div>
-        </header>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+
+
 
         
           

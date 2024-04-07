@@ -9,24 +9,37 @@
     </div>
 </header>
 
-<div class = "container">
-    <div class="row">
-        <center>
-            <div class = " col-8">
-                {%for category in categories%}
-                
-                    {%if category.parent %}
-                        {{category.parent.name}}
-                        <h3><a href="{% url 'category' category %}">{{category}}</a></h3>
-                    {%else%}
-                        <h3><a href="{% url 'category' category %}">{{category}}</a></h3>
-                        {%endif%}
-                {%endfor%}
+<div class="container">
+    {% for category in categories %}
+    {% if forloop.counter0|divisibleby:3 %}
+    <div class="row"> <!-- Start a new row for every third card -->
+    {% endif %}
+    <div class="col-lg-4 col-md-6 mb-4"> <!-- Bootstrap column classes -->
+        {% if category.parent %}
+        {{ category.parent.name }}
+        <div class="card mt-5" style="width: 18rem;"> <!-- Added margin top -->
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ category }}</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="{% url 'category' category %}" class="btn btn-primary">Explore</a>
             </div>
-        </center>
+        </div>
+        {% else %}
+        <div class="card mt-5" style="width: 18rem;"> <!-- Added margin top -->
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ category }}</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="{% url 'category' category %}" class="btn btn-primary">Explore</a>
+            </div>
+        </div>
+        {% endif %}
     </div>
+    {% if forloop.last or forloop.counter0|add:1|divisibleby:3 %}
+    </div> <!-- Close the row when it's the last card or after every third card -->
+    {% endif %}
+    {% endfor %}
 </div>
-</br>
-</br>
-</br></br></br></br>
+
 {% endblock %}
