@@ -7,9 +7,23 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm, UserInfoform
 from django import forms
+from django.db.models import Q
 
-
-
+#search 
+def search(request):
+    #determine if they fill out the form
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        #Query the db models
+        searched = Product.objects.filter(Q(name__icontains=searched) | Q(description__icontains=searched))  #icontains allows to search case insensitive .
+        
+        if not searched:
+            messages.success(request, "Sorry, The Product you are searching for is not available!")
+            return render(request, 'search.html', {"searched":searched})
+        else:
+            return render(request, 'search.html', {"searched":searched})
+    else:
+        return render(request, "search.html", {})
 
 #Update user details
 def update_info(request):
