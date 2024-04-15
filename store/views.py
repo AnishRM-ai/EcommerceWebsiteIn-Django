@@ -102,8 +102,9 @@ def update_user(request):
 
 
 def category_summary(request):
+    product = Product.objects.all()
     categories = Category.objects.filter()
-    return render(request, 'category_summary.html', {"categories": categories})
+    return render(request, 'category_summary.html', {"categories": categories, "product": product})
 
 def category(request, foo):
     #Replace Hyphens with Spaces
