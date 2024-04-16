@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Product
-from .models import Category, Profile
+from .models import Category, Profile, ClothingSize
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -129,7 +129,8 @@ def category(request, foo):
 
 def product(request, pk):
     product = Product.objects.get(id = pk)
-    return render(request, 'product.html', {'product': product})
+    sizes = ClothingSize.objects.all()
+    return render(request, 'product.html', {'product': product, 'size':sizes})
 
 def home(request):
     products = Product.objects.all()

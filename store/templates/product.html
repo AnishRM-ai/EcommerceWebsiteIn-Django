@@ -46,6 +46,19 @@
                     </div>
                     </div>
 
+                     <!-- Add size selection -->
+              <div class="row justify-content mt-2">
+                <div class="col-md-2">Size:</div>
+                <div class="col-md-2">
+                  <select class="form-select form-select-sm" id="size-select">
+                    {% for sizes in size %}
+                      <option value="{{ size }}">{{ sizes.size }}"</option>
+                     
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              
               <p class="card-text"><small class="text-body-secondary">{{product.date}}</small></p>
 
               <br><br>

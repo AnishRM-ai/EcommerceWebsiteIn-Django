@@ -4,6 +4,21 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
 
+#Clothes size 
+
+class ClothingSize(models.Model):
+    CHOICES = (('S', 'Small'),
+               ('M','Medium'),
+               ('L', 'Large'),
+               ('XL', 'Extra Large'))
+    size = models.CharField(max_length=2, choices=CHOICES, default='M')
+    
+
+    def __str__(self):
+        return self.size
+        
+
+
 
 #Customer Profile Creation
 class Profile(models.Model):
@@ -20,7 +35,7 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username + " profile"
     
-#Create a user Profile by defaul when user sign ups
+#Create a user Profile by default when user sign ups
 def create_profile(sender, instance, created, **kwargs):
     if created:
         user_profile = Profile(user=instance)
@@ -41,18 +56,6 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = 'Categories'
         
-
-class ClothingCategory(models.Model):
-    GENDER_CHOICES = (
-        ('M', 'Men'),
-        ('F', 'Female'),
-        ('U', 'Unisex'),
-    )
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    category = models.OneToOneField(Category, on_delete=models.CASCADE, related_name='clothing_category')
-
-    def __str__(self):
-        return f"{self.get_gender_display()} Clothing"       
 class Subcategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
@@ -78,10 +81,13 @@ class Product(models.Model):
     description =  models.CharField(max_length=250, default='', blank = True, null=True)
     image = models.ImageField(upload_to='uploads/product/')
     
+    
     # Add Sale Stuff
     is_sale = models.BooleanField(default= False)
     sale_price = models.DecimalField(default=0, decimal_places=2, max_digits = 8)
     
+    #Add stock of the product
+    in_stock =  models.PositiveIntegerField(default=1)
     
     def __str__(self):
         return self.name
