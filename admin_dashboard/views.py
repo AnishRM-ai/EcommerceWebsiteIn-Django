@@ -52,4 +52,4 @@ def product_delete(request, pk):
     if request.method == 'POST':
         product.delete()
         return redirect('product_list')
-    return render(request, 'product_confirm_delete.html', {'product': product})
+    return render(request, 'product_delete.html', {'product': product})
