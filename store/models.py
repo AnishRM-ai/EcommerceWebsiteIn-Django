@@ -50,6 +50,7 @@ post_save.connect(create_profile, sender=User)
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='children' )
+    category_image = models.ImageField(upload_to='uploads/category/')
     def __str__(self):
         return self.name
 
@@ -84,7 +85,7 @@ class Product(models.Model):
     
     # Add Sale Stuff
     is_sale = models.BooleanField(default= False)
-    sale_price = models.DecimalField(default=0, decimal_places=2, max_digits = 8)
+    sale_price = models.DecimalField(default=0, decimal_places=2, max_digits = 8, null=True)
     
     #Add stock of the product
     in_stock =  models.PositiveIntegerField(default=1)

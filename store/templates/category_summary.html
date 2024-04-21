@@ -19,7 +19,7 @@
         {% if category.parent %}
         
         <div class="card mt-5" style="width: 18rem;"> <!-- Added margin top -->
-            <img src="/media/uploads/product/slide3.png" class="card-img-top" alt="...">
+            <img src="{{ category.category_image.url }}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ category }}</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -29,7 +29,7 @@
 
         {% else %}
         <div class="card mt-5" style="width: 18rem;"> <!-- Added margin top -->
-            <img src="/media/uploads/product/slide1.jpg" class="card-img-top" alt="...">
+            <img src="{{ category.category_image.url }}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ category }}</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -43,7 +43,8 @@
     {% endif %}
     {% endfor %}
 </div>
-
+{% comment %} {% for category in categories %}
+    {%if category %}
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Sale badge-->
@@ -98,7 +99,7 @@
                 </div>
             </div>
             {% endif %}
-            {% endfor %} 
+            {% endfor %}  {% endcomment %}
 </div>
 </br>
 </br>

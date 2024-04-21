@@ -17,6 +17,20 @@ def productManage(request):
 
 
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import Group
+
+@login_required
+def custom_admin_view(request):
+    # Check if the user is in the 'Admin Users' group
+    if not request.user.groups.filter(name='Admin-Seller').exists():
+        # Redirect to a different page or display an error message
+        messages.success(request,"You are not authorized to access dashboard.")
+        return redirect('home')
+
+   
+    return render(request, 'dashboard.html')
 
 # View to list all products
 def product_list(request):

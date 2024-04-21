@@ -2,7 +2,42 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, SetPasswordForm
 from django import forms
 from .models import Profile
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate
 
+
+class GroupUserLoginForm(AuthenticationForm):
+    """Custom login form for group users with username and password fields."""
+    
+    # Define the username field with appropriate properties
+    username = forms.CharField(
+        max_length=150,  # Maximum length of the username
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
+        required=True  # This field is required
+    )
+    
+    # Define the password field with appropriate properties
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
+        required=True  # This field is required
+    )
+    
+    def clean(self):
+        # Perform authentication using the username and password provided in the form
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        password = cleaned_data.get('password')
+        
+        # Authenticate the user
+        user = authenticate(username=username, password=password)
+        
+        if user is None:
+            raise forms.ValidationError('Invalid username or password.')
+        
+        # Add the authenticated user to the cleaned data
+        cleaned_data['user'] = user
+        return cleaned_data
+    
 class UserInfoform(forms.ModelForm):
     phone = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Phone'}), required=False)  # Phone number of the customer
     address1 = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Address1'}), required=False)# Address of the customer
