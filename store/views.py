@@ -23,7 +23,7 @@ def login_view(request):
 
     # If the user is already logged in, redirect to a specific page
     if request.user.is_authenticated:
-        return redirect('dashboard')
+        return redirect('home')
     
     # Handle POST request for login form submission
     if request.method == 'POST':
@@ -38,7 +38,7 @@ def login_view(request):
             if user.groups.filter(name='Seller-Admin').exists():
                 return redirect('dashboard')  # Redirect to a group-specific page
             else:
-                return redirect('profile')  # Redirect to the profile page
+                return redirect('home')  # Redirect to the profile page
     else:
         form = GroupUserLoginForm()  # Create a new form for GET requests
     
