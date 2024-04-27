@@ -12,6 +12,11 @@ from django.contrib.auth.models import Group
 
 from .forms import GroupUserLoginForm
 
+#Checkout Page
+def check_out(request):
+    return render(request, 'checkout.html', {})
+
+
 def login_view(request):
     user = request.user
     is_seller_admin = user.groups.filter(name='Seller-Admin').exists()

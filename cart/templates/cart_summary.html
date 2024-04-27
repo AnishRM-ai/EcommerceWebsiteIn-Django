@@ -92,7 +92,7 @@
 
         {% endfor %}
         <h3>Total:${{totals}} </h3>
-        <button type="submit" class="btn btn-secondary">Check Out</button>
+        <a class="btn btn-secondary" href="{% url 'checkout' %}">Check Out</a>
         {% else %}
         <center><h2>There's nothing here!</h2></center> <br>
         {% endif %}

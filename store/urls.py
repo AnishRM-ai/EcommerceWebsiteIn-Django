@@ -15,4 +15,5 @@ urlpatterns = [
     path('update_info/', views.update_info, name="update_info"),#urlpatterns for update info page
     path('update_password/', views.update_password, name='update_password'),#urlpatterns for updating password page
     path('search/', views.search, name='search'),#urlpatterns for search bar
+     path('checkout/', views.check_out, name='checkout'),#urlpatterns for chgeckout
 ]
