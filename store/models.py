@@ -31,6 +31,7 @@ class Profile(models.Model):
     state = models.CharField(max_length=200, blank=True)
     zipcode = models.CharField(max_length=200, blank=True)
     country = models.CharField(max_length=200, blank=True)
+    old_cart = models.CharField(max_length=200, blank=True, null=True)   # Cart data stored here when a user is logged out.
     
     def __str__(self):
         return self.user.username + " profile"
