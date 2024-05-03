@@ -11,11 +11,15 @@
 
 <center>
 <div class="col-5 text-center mb-3 my-5">
+    <strong>Billing Information</strong>
+</br></br>
     <form method="POST" action="{% url 'update_info' %}">
          {% csrf_token %}
         
          {{ form.as_p }}
          <br/><br/>
+        <strong> Shipping information</strong>
+         {{ shipping_form.as_p}}
          <button type="submit" class="btn btn-secondary">
             Update Profile
          </button>

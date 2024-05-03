@@ -70,6 +70,19 @@
                     </select>
                   </div>
                   </div>
+
+                  <!-- Add size selection -->
+              <div class="row justify-content mt-2">
+                <div class="col-md-2">Size:</div>
+                <div class="col-md-2">
+                  <select class="form-select form-select-sm" id="size-select">
+                    {% for sizes in size %}
+                      <option value="{{ size }}">{{ sizes.size }}"</option>
+                     
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
                       <p class="card-text"><small class="text-body-secondary">{{product.date}}</small></p>
         
                       <br><br>
@@ -92,7 +105,7 @@
 
         {% endfor %}
         <h3>Total:${{totals}} </h3>
-        <a class="btn btn-secondary" href="{% url 'checkout' %}">Check Out</a>
+        <a class="btn btn-success" href="{% url 'checkout' %}">Check Out</a>
         {% else %}
         <center><h2>There's nothing here!</h2></center> <br>
         {% endif %}

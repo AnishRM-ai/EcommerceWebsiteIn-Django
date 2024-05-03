@@ -10,13 +10,16 @@ from django import forms
 from django.db.models import Q
 from django.contrib.auth.models import Group
 from .forms import GroupUserLoginForm
+from payment.forms import ShippingForm
+from payment.models import ShippingAddress
 import json
 from cart.cart import Cart
-#Checkout Page
-def check_out(request):
-    return render(request, 'checkout.html', {})
 
 
+
+
+
+#Seller Admin  Panel
 def login_view(request):
     user = request.user
     is_seller_admin = user.groups.filter(name='Seller-Admin').exists()
@@ -83,31 +86,35 @@ def update_info(request):
     """
     
     if request.user.is_authenticated:
-         try:
-            current_users = Profile.objects.get(user__id=request.user.id)
-         except Profile.DoesNotExist:
-              # Handle the case where the user profile does not exist
+        try:
+            current_users = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
             messages.error(request, "User profile does not exist.")
-            return redirect('home')  # Redirect to home or appropriate page
-        
-         form = UserInfoform(request.POST or None, instance=current_users)
-         if request.method == 'POST':   
-          if form.is_valid():
-            form.save()
-            messages.success(request, "Your Info Has been updated successfully")
             return redirect('home')
-          else:
-                # Handle the case where form validation fails
+
+        try:
+            shipping_user = ShippingAddress.objects.get(user=request.user)
+        except ShippingAddress.DoesNotExist:
+            shipping_user = ShippingAddress(user=request.user)  # Create a new instance
+
+        form = UserInfoform(request.POST or None, instance=current_users)
+        shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
+
+        if request.method == 'POST':
+            if form.is_valid() or shipping_form.is_valid():
+                form.save()
+                shipping_form.save()
+                messages.success(request, "Your Info Has been updated successfully")
+                return redirect('home')
+            else:
                 messages.error(request, "Form is not valid.")
-                # You might want to render the form again to show validation errors.
-                # Example: return render(request, 'update_info.html', {'form': form})
-         else:
-            # If it's not a POST request, just render the form
-            return render(request, 'update_info.html', {'form': form})
+                return render(request, 'update_info.html', {'form': form, 'shipping_form': shipping_form})
+        else:
+            return render(request, 'update_info.html', {'form': form, 'shipping_form': shipping_form})
+
     else:
-        # Handle the case where the user is not authenticated
         messages.error(request, "You need to be logged in to update your info.")
-        return redirect('login')  # Redirect to login page or appropriate page
+        return redirect('login')
 
 #Update password
 def update_password(request):

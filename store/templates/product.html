@@ -82,6 +82,7 @@ $(document).on('click', '#add-cart', function(e){
       data: {
         product_id: $('#add-cart').val(),
         product_qty: $('#qty-cart option:selected').text(),
+        product_size: $('#size-select option:selected').text(),
         csrfmiddlewaretoken: '{{ csrf_token }}',
         action: 'post'
       },

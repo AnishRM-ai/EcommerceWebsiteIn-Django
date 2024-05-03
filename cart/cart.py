@@ -37,16 +37,18 @@ class Cart():
             #save carty to user profile model
             current_user.update(old_cart=str(carty))
       
-    def add(self, product,quantity):
+    def add(self, product,quantity, size):
       
         product_id = str(product.id)
         product_qty = str(quantity)
+        product_size = str(size)
         # Logic
         if product_id in self.cart:
             pass
         else:
-            # self.cart[product_id] = {'price': str(product.price)}
+           
             self.cart[product_id] = int(product_qty)
+
         self.session.modified = True
         
         # Deal with logged in user
@@ -122,9 +124,9 @@ class Cart():
         #lookup those keys in our products db models
         products = Product.objects.filter(id__in=product_id)
         #get quantities
-        quatities = self.cart
+        quantities = self.cart
         total = 0 #initializing at 0
-        for key, value in quatities.items():
+        for key, value in quantities.items():
             key = int(key)#convert into int from str
             for product in products:
                 if product.id == key:
@@ -136,10 +138,6 @@ class Cart():
         
         return total
     
-    def get_size(self):
-        product_id = self.cart.keys()
-        
-        
-        quantities = self.cart
+  
         
                     
