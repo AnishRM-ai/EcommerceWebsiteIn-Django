@@ -41,6 +41,7 @@ def login_view(request):
             if user.groups.filter(name='Seller-Admin').exists():
                 return redirect('dashboard')  # Redirect to a group-specific page
             else:
+                messages.success(request, "Sorry, This page only accessible by Seller Admin.")
                 return redirect('home')  # Redirect to the profile page
     else:
         form = GroupUserLoginForm()  # Create a new form for GET requests
