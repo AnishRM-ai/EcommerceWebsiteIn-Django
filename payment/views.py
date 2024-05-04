@@ -4,13 +4,13 @@ from .forms import ShippingForm, PaymentForm
 from .models import ShippingAddress, Order, OrderItem
 from django.contrib import messages
 from django.contrib.auth.models import User
-
+from store.models import Product
 
 #Process the customer order
 def process_order(request):
     if request.POST:
        cart = Cart(request)
-       cart_products = cart.get_prods
+       cart_products = cart.get_prods()
        quantities = cart.get_quants
        totals = cart.cart_total()
         # Get Billing info from the user
@@ -31,20 +31,56 @@ def process_order(request):
            #Create order
            create_order = Order(user=user, fullname = fullname, email=email, shipping_address=shipping_address, amount_paid=totals)
            create_order.save()
+           #Order Item Create
+           order_id = create_order.pk
+           #Get product Info
+           for product in cart_products:
+               # Get product Id
+               product_id = product.id
+               # Get product Price
+               if product.is_sale:
+                   price = product.sale_price
+               else:
+                   price = product.price
+                   
+                # Get Quantity
+               for key, value in quantities().items():
+                    if int(key) == product_id:
+                        # Create order Item
+                        create_order_item = OrderItem(order_id=order_id, product_id=product_id, user=user, quantity=value, price=price )
+                        create_order_item.save()
+               
            messages.success(request, "Ordered Placed!")
            return redirect('home')
        else:
            #logged out user/no user account
            create_order = Order(fullname = fullname, email=email, shipping_address=shipping_address, amount_paid=totals)
            create_order.save()
+           
+            #Order Item Create
+           order_id = create_order.pk
+           #Get product Info
+           for product in cart_products:
+               # Get product Id
+               product_id = product.id
+               # Get product Price
+               if product.is_sale:
+                   price = product.sale_price
+               else:
+                   price = product.price
+                   
+                # Get Quantity
+               for key, value in quantities().items():
+                    if int(key) == product_id:
+                        # Create order Item
+                        create_order_item = OrderItem(order_id=order_id, product_id=product_id, quantity=value, price=price )
+                        create_order_item.save()
            messages.success(request, "Ordered Placed!")
            return redirect('home')
        
        
        
-       messages.success(request, "Ordered Placed!")
-       return redirect('home')
-       
+     
        
         
     else:
