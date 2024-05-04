@@ -26,12 +26,14 @@
     <div class="row">
         <div class="col-md-6 mb-4">
             <div class="border p-3">
-                <h4 class="mb-4">Billing Information</h4>
-                <form>
+                <h4 class="mb-4">Shipping Information</h4>
+                <form method = "POST" action="{%url 'billing_info'%}">
                     <!-- Form for shhipping information -->
-                   
+                   {% csrf_token %}
                     {{shipping_form.as_p}}
-
+                    <div class="text-right mt-3">
+                        <button type="submit" class="btn btn-primary">Place Order</button>
+                    </div>
                 </form>
             </div>
             <!-- Payment Method Section -->
@@ -60,14 +62,14 @@
                         <small>Nrs: {{product.sale_price}}</small>
                         {% else %}
                         <small>Nrs: {{product.price}}</small>
-                        {% endif %}
+                        {% endif %}</br>
                         <small>Quantity:<span class="float-right"> {% for key, value in quantities.items %}
                             {% if key == product.id|slugify %}
                             
                             <option selected>{{ value }}   </option>
                             {% endif %}
                             
-                        </span>{% endfor %} </small>
+                        {% endfor %} </span></small>
                         <small> Size:  {% for sizes in size %}
                             <option value="{{ size }}">{{ sizes.size }}"</option>
                            
@@ -85,10 +87,9 @@
                 </div>
             </div>
           
-            <!-- Place Order Button -->
-            <div class="text-right mt-3">
-                <button type="button" class="btn btn-primary">Place Order</button>
-            </div>
+          
+           
+      
         </div>
     </div>
 </div>

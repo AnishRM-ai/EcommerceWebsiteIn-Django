@@ -1,0 +1,84 @@
+{%extends 'base.html' %}
+{%block content%}
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder"> Billing Information</h1>
+          
+        </div>
+    </div>
+</header>
+<center>
+    <div class="col-5 text-lg-start mb-3 my-5">
+        <div class="card">
+          <div class="card-header">
+            Order Summary
+          </div>
+          <div class="card-body">
+            {% for product in cart_products %}
+              <p>
+                <strong>Product Name: {{ product.name }}</strong>
+                <small>
+                  Quantity:
+                  <span class="float-right">
+                    {% for key, value in quantities.items %}
+                      {% if key == product.id|slugify %}
+                        {{ value }}
+                      {% endif %}
+                    {% endfor %}
+                  </span>
+                </small>
+                <small>
+                  Size:
+                  {% for size in sizes %}
+                    <option value="{{ size }}">{{ size }}</option>
+                  {% endfor %}
+                </small>
+                <small>
+                  Price: Nrs
+                  {% if product.is_sale %}
+                    {{ product.sale_price }}
+                  {% else %}
+                    {{ product.price }}
+                  {% endif %}
+                </small>
+              </p>
+              <p>Total: Nrs {{totals}}</p>
+            {% endfor %}
+          </div>
+        </div>
+    </br></br>
+    <!---Billing Information -->
+    <div class="card">
+        <div class="card-header">
+          Shipping Information 
+        </div>
+        <div class="card-body">
+         Full Name: {{shipping_info.shipping_fullname}}</br>
+         Email: {{shipping_info.shipping_email}}</br>
+         Address 1: {{shipping_info.shipping_address1}}</br>
+         Address 2: {{shipping_info.shipping_address2}}</br>
+         City: {{shipping_info.shipping_city}}</br>
+         State: {{shipping_info.shipping_state}}</br>
+         Zipcode: {{shipping_info.shipping_zipcode}}</br>
+         Country: {{shipping_info.shipping_country}}</br>
+      </div>
+    </div>
+</br></br>
+    <div class="card">
+        <div class="card-header">
+          Billing Information 
+        </div>
+        <div class="card-body">
+        <form>
+            {%csrf_token%}
+            {{billing_form.as_p}}
+            <button type="submit" class="btn btn-outline-primary">Pay</button>
+        </form>
+      </div>
+    </div>
+</div>
+<center>
+{% endblock %}
+
+
