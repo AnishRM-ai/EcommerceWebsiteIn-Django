@@ -2,6 +2,7 @@ from django.contrib import admin
 from . models import Category, Customer, Product, Order , Profile, ClothingSize, Subcategory
 from django.contrib.auth.models import User
 
+
 # Register your models here.
 admin.site.register(Category)
 admin.site.register(Subcategory)
@@ -26,3 +27,4 @@ admin.site.unregister(User)
 
 #Re-register 
 admin.site.register(User, UserAdmin)
+

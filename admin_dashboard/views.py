@@ -9,6 +9,7 @@ from django import forms
 from django.db.models import Q
 from .forms import ProductForm, OrderForm, OrderItemForm, OrderItemFormSet
 from payment.models import Order, OrderItem
+from django.contrib.auth.models import User
 
 #Function to create Order
 def create_order(request):
@@ -49,7 +50,11 @@ def order_delete(request, pk):
 
 # Create your views here.
 def admin_dash(request):
-    return render(request, 'dashboard.html', {})
+    product = Product.objects.count()
+    orders = Order.objects.count()
+    order_pending = Order.objects.filter(shipped = False).count()
+    users = User.objects.count()
+    return render(request, 'dashboard.html', {'count': product, 'order_count': orders, 'pending_order': order_pending, 'user':users})
 
 def productManage(request):
     return render(request, 'productadd.html', {})
