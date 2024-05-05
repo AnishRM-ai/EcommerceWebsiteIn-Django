@@ -25,8 +25,8 @@ def login_view(request):
     is_seller_admin = user.groups.filter(name='Seller-Admin').exists()
 
     # If the user is already logged in, redirect to a specific page
-    if request.user.is_authenticated:
-        return redirect('home')
+    if request.user.is_authenticated and is_seller_admin:
+        return redirect('dashboard')
     
     # Handle POST request for login form submission
     if request.method == 'POST':

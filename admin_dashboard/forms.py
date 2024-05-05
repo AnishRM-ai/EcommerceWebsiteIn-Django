@@ -1,6 +1,8 @@
 from django import forms
 from store.models import Product, Category
-
+from payment.models import Order, OrderItem
+from django.forms import formset_factory
+from django.forms.models import inlineformset_factory
 class ProductForm(forms.ModelForm):
    # Custom form fields with Bootstrap classes and specific placeholder texts
     name = forms.CharField(
@@ -57,6 +59,20 @@ class ProductForm(forms.ModelForm):
         self.fields['category'].choices = [(category.id, category.name) for category in Category.objects.all()]
         
         
-       
+#To create Orders
+class OrderForm(forms.ModelForm):
+    """A form to create an order."""
+    class Meta:
+        model = Order
+        fields = ['user', 'fullname', 'email', 'shipping_address', 'amount_paid', 'shipped']
+        
+
+class OrderItemForm(forms.ModelForm):
+    class Meta:
+        model = OrderItem
+        fields = ["order", "product", "user", "quantity", "price"]
 
     
+
+
+OrderItemFormSet = inlineformset_factory(Order, OrderItem, fields=('product', 'quantity', 'price','user', 'order' ), extra=0)

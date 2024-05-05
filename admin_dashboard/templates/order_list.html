@@ -1,0 +1,56 @@
+{% extends "dashbase.html" %}
+{%block content%}
+{% include 'layout.html'%}
+
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Order Id</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Shipping Address</th>
+            <th scope="col">Email</th>
+            <th scope="col">Date Ordered</th>
+            <th scope="col">Total amount</th>
+            <th scope="col">Shipping Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in order_list %}
+          <tr>
+            <td>{{ order.pk }}</td>
+            <td>{{ order.fullname }}</td>
+            <td>{{ order.shipping_address }}</td>
+            <td>{{ order.email }}</td>
+            <td>{{ order.date_ordered}}</td>
+            <td>{{ order.amount_paid}}</td>
+            <td>{{ order.shipped}}</td>
+            <td><a href = "{% url 'order_edit' order.pk %}" class=" btn btn-outline-secondary">View </a></td>
+            <td><a href="{% url 'order_delete' order.pk %}"  class=" btn btn-outline-danger">Delete</a></td>
+
+            
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</div>
+</main>
+</div>
+</div>
+
+
+</br></br></br>
+
+
+{%endblock%}
