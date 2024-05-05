@@ -10,7 +10,8 @@
         <p>Are you sure you want to delete order "{{ order }}"?</p>
         <form method="post">
             {% csrf_token %}
-            <button type="submit">Delete</button>
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a href="{% url 'order_list'%}" class="btn btn-outline-info">Cancel</a>
         </form>
  </div>
  </div>

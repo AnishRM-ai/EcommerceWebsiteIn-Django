@@ -1,12 +1,26 @@
 {% extends "dashbase.html" %}
-{%load static %}
-{% include 'layout.html'%}
 {% block content%}
+{% include 'layout.html'%}
+
+
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+  <div class="row">
+    <div class="col">
+
 <h1>Delete Product</h1>
 <p>Are you sure you want to delete {{ product.name }}?</p>
 <form method="post">
     {% csrf_token %}
-    <button type="submit">Yes, Delete</button>
+    <button type="submit" class="btn btn-outline-danger">Yes, Delete</button>
+    <a href="{% url 'product_list' %}" class="btn btn-outline-dark">Cancel</a>
 </form>
-<a href="{% url 'product_list' %}">Cancel</a>
+
+</div>
+</div>
+</div>
+</main>
+</div>
+
 {% endblock %}

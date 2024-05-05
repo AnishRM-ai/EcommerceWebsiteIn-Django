@@ -26,6 +26,7 @@ def login_view(request):
 
     # If the user is already logged in, redirect to a specific page
     if request.user.is_authenticated and is_seller_admin:
+        messages.success(request, "Welcome to Dashboard Admin.")
         return redirect('dashboard')
     
     # Handle POST request for login form submission
@@ -39,6 +40,7 @@ def login_view(request):
             
             # Redirect based on the user's group
             if user.groups.filter(name='Seller-Admin').exists():
+                messages.success(request, "Welcome to Dashboard Admin.")
                 return redirect('dashboard')  # Redirect to a group-specific page
             else:
                 messages.success(request, "Sorry, This page only accessible by Seller Admin.")

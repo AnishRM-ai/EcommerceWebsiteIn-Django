@@ -1,4 +1,6 @@
 {% load static %}
+
+
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 <!-- Navbar Brand-->
 <a class="navbar-brand ps-3" href="{% url 'dashboard' %}">LUGAAA Dashboard</a>
@@ -24,6 +26,15 @@
     </li>
 </ul>
 </nav>
+{% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible custom-alert fade" role="alert" style="position: fixed; right: 10px; top: 10px; z-index: 1000;">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          
+        {% endfor %}
+    {% endif %}
 <div id="layoutSidenav">
 <div id="layoutSidenav_nav">
     <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">

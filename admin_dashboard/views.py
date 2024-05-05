@@ -66,6 +66,7 @@ def product_create(request):
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, "Product successfully Added!")
             return redirect('product_list')
     else:
         form = ProductForm()
@@ -78,6 +79,7 @@ def product_update(request, pk):
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
             form.save()
+            messages.success(request, "Product successfully Updated!")
             return redirect('product_list')
     else:
         form = ProductForm(instance=product)
@@ -88,5 +90,6 @@ def product_delete(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if request.method == 'POST':
         product.delete()
+        messages.success(request, "Product successfully removed!")
         return redirect('product_list')
     return render(request, 'product_delete.html', {'product': product})
