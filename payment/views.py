@@ -6,6 +6,13 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from store.models import Product
 
+#Tracking Order 
+def order_tracking(request):
+    # get the order of current user
+    user_orders = Order.objects.filter(user=request.user)
+    user_order_item = OrderItem.objects.filter(order__in = user_orders)
+    return render(request, 'payment/order_tracking.html', {'user_orders': user_orders, 'order_item': user_order_item})
+
 #Process the customer order
 def process_order(request):
     if request.POST:

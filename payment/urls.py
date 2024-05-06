@@ -6,4 +6,5 @@ urlpatterns = [
     path('checkout/', views.check_out, name='checkout'),#urlpatterns for checkout
     path('billing_info/', views.billing_info, name='billing_info'),
     path('process_order', views.process_order,name='process_order' ),
+    path('order_tracking', views.order_tracking, name='order_tracking'),
 ]
