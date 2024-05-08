@@ -1,11 +1,29 @@
 from django.shortcuts import render, redirect
 from cart.cart import Cart
-from .forms import ShippingForm, PaymentForm
+from .forms import ShippingForm, PaymentForm, CancellationForm
 from .models import ShippingAddress, Order, OrderItem
 from django.contrib import messages
 from django.contrib.auth.models import User
 from store.models import Product
 
+
+#Order Cancellation
+def cancel_order(request):
+    order = Order.objects.filter(user=request.user)
+    if request.method == 'POST':
+        form = CancellationForm(request.POST)
+        if form.is_valid():
+            reason = form.cleaned_data['reason']
+            cancellation = CancellationForm()
+            cancellation.save()
+            # Optionally update order status here
+            return redirect('payment/order_tracking', order_id=order)
+    else:
+        form = CancellationForm()
+    return render(request, 'payment/cancel_order.html', {'form': form})
+            
+    
+    
 #Tracking Order 
 def order_tracking(request):
     # get the order of current user

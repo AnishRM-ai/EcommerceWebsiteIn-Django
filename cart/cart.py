@@ -1,6 +1,6 @@
 from store.models import Product
 import datetime
-from store.models import Profile
+from store.models import Profile, ClothingSize
 
 class Cart():
     def __init__(self, request):
@@ -47,7 +47,7 @@ class Cart():
             pass
         else:
            
-            self.cart[product_id] = int(product_qty)
+            self.cart[product_id] = {'quantity': int(product_qty), 'size': product_size}
 
         self.session.modified = True
         
@@ -76,6 +76,10 @@ class Cart():
     def get_quants(self):
         quantities = self.cart
         return quantities
+    
+    def get_size(self):
+        size = self.cart
+        return size
     
     def update(self, product, quantity):
         product_id = str(product)

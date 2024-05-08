@@ -40,6 +40,7 @@ def order_edit(request, pk):
     return render(request, 'order_edit.html', {'orderform': form, 'order_item_formset': order_item_formset, 'order': order})
 
 #Delete orders.
+
 def order_delete(request, pk):
     order = get_object_or_404(Order, pk=pk)
     if request.method == 'POST':

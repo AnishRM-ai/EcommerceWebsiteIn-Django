@@ -8,8 +8,9 @@ def cart_summary(request):
     cart = Cart(request)
     cart_products = cart.get_prods
     quantities = cart.get_quants
+    size = cart.get_size
     totals = cart.cart_total()
-    return render(request, "cart_summary.html", {'cart_products': cart_products,   "quantities": quantities, "totals": totals})
+    return render(request, "cart_summary.html", {'cart_products': cart_products,   "quantities": quantities, "totals": totals, "size":size})
 
 
 
@@ -18,7 +19,7 @@ def cart_add(request):
     #Get the cart
     cart = Cart(request)
     #test for Post
-    if request.POST.get('action') == 'post':
+    if request.POST.get('action') == 'POST':
          # Get stuff
          product_id = int(request.POST.get('product_id'))
          product_qty = int(request.POST.get('product_qty'))
@@ -32,7 +33,7 @@ def cart_add(request):
          cart_quantity = cart.__len__()
          #return response
         #  response = JsonResponse({'Product Name': product.name})
-         response = JsonResponse({'qty': cart_quantity})
+         response = JsonResponse({'qty': cart_quantity,})
          messages.success(request, "Your item has been added!")
          return response
     

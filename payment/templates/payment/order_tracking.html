@@ -15,14 +15,20 @@
             Order Summary
           </div>
           <div class="card-body">
+            {%if user_orders  %}
             {% for order in user_orders%}
+            <h2>Order Id-  {{order.pk}}</h2>
             {% if order.shipped %}
-                <h3>Shipped</h3>
+                <h3>Shipped on - {{order.shipped_date}}</h3>
             {%else%}
             <h3>Pending</h3>
-            {% endif%}
+            <a href = "{% url 'cancel_order' %}" class="btn btn-danger ">Cancel Order</a>
+            {%endif%}
+           
+           
+           
             
-           Order Id:  {{order.pk}}
+          
             
           
             {% for orderitem in order_item %}
@@ -32,7 +38,11 @@
             {% endfor %}
             Total Price: {{order.amount_paid}}
         </ul>
+      
     {% endfor %}
+    {%else%}
+    <p>Looks like you havent placed any orders yet!</p>
+    {%endif%}
 
 
   </div>         
