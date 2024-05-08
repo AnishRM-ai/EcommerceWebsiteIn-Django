@@ -14,8 +14,14 @@ from payment.forms import ShippingForm
 from payment.models import ShippingAddress
 import json
 from cart.cart import Cart
+from payment.models import Order
 
-
+#user order notification
+def order_notify(request):
+    user = request.user
+    order = Order.objects.filter(user = user, shipped = False).count()
+    return  {'order_count': order}
+    
 
 
 
