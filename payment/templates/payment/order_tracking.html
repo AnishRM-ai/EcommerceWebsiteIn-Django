@@ -18,12 +18,12 @@
             {%if user_orders  %}
             {% for order in user_orders%}
             <h2>Order Id-  {{order.pk}}</h2>
-            {% if order.shipped %}
-                <h3>Shipped on - {{order.shipped_date}}</h3>
-            {%else%}
-            <h3>Pending</h3>
-            <a href = "{% url 'cancel_order' %}" class="btn btn-danger ">Cancel Order</a>
-            {%endif%}
+            {% if order.status == 'Pending'%}
+            {{order.status}}
+            <a href = "{% url 'cancel_order' order.pk %}" class="btn btn-danger ">Cancel Order</a>
+            {% else%}
+            {{order.status}}
+            {% endif %}
            
            
            

@@ -34,7 +34,7 @@ class PaymentForm(forms.Form):
 class CancellationForm(forms.ModelForm):
      class Meta():
          model = CancellationOrder
-         fields = ['order','reason']
+         fields = ['reason']
          
      
          

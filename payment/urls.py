@@ -7,5 +7,5 @@ urlpatterns = [
     path('billing_info/', views.billing_info, name='billing_info'),
     path('process_order', views.process_order,name='process_order' ),
     path('order_tracking', views.order_tracking, name='order_tracking'),
-    path('cancel_order', views.cancel_order, name='cancel_order'),
+    path('cancel_order/<int:pk>', views.cancel_order, name='cancel_order'),
 ]

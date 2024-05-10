@@ -32,7 +32,7 @@ class Order(models.Model):
     shipping_address= models.TextField(max_length=15000)
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2)
     date_ordered = models.DateTimeField(auto_now_add=True)
-    shipped = models.BooleanField(default=False)
+    status =  models.CharField(max_length=25, default='Pending')
     shipped_date = models.DateTimeField(blank=True, null=True)
     def __str__(self):
         return f'Order - {str(self.id)}'
@@ -44,7 +44,7 @@ def set_shipped_date_on_update(sender, instance, **kwargs):
     if instance.pk:
         now = datetime.datetime.now()
         obj = sender._default_manager.get(pk=instance.pk)
-        if instance.shipped and not obj.shipped:
+        if instance.status == 'Shipped' and obj.status != 'Shipped':
             instance.shipped_date = now
     
     
@@ -64,7 +64,7 @@ class OrderItem(models.Model):
         return f'Order Items - {str(self.id)}'
     
 class CancellationOrder(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
     reason = models.TextField(blank=True)
     cancelled_date = models.DateTimeField(auto_now_add=True)
         

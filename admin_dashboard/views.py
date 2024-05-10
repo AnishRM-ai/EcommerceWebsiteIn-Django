@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render, redirect
 from store.models import Product
-from store.models import Category, ClothingSize
+from store.models import Category
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django import forms
@@ -53,7 +53,7 @@ def order_delete(request, pk):
 def admin_dash(request):
     product = Product.objects.count()
     orders = Order.objects.count()
-    order_pending = Order.objects.filter(shipped = False).count()
+    order_pending = Order.objects.filter(status='Pending').count()
     users = User.objects.count()
     current_user_name = request.user.username
     return render(request, 'dashboard.html', {'count': product, 'order_count': orders, 'pending_order': order_pending, 'user':users, 'current_user_name': current_user_name})
