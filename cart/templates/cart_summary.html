@@ -47,7 +47,7 @@
                     Price: NPR {{product.price}}
                     {% endif %}
         <br/><br/>
-        <div class = "row justify-content-center"> 
+        <div class = "row "> 
           <div class = "col-md-2">Quantity: </div>
           <div class = "col-md-2">   
            
@@ -70,18 +70,7 @@
                     </select>
                   </div>
                   </div>
-
-                  <!-- Add size selection -->
-              <div class="row justify-content mt-2">
-                <div class="col-md-2">Size:</div>
-                <div class="col-md-2">
-                  <select class="form-select form-select-sm" id="size-select">
-                    {% for sizes in size %}
-                      <option value="{{ size }}">{{ sizes.size }}"</option>
-                     
-                    {% endfor %}
-                  </select>
-                </div>
+                  
               </div>
                       <p class="card-text"><small class="text-body-secondary">{{product.date}}</small></p>
         
@@ -110,6 +99,9 @@
         <center><h2>There's nothing here!</h2></center> <br>
         {% endif %}
 
+
+        
+  </table>
     </div>
     </br> </br> </br> </br> </br>
 

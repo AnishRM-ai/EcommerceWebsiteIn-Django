@@ -1,6 +1,7 @@
 from store.models import Product
 import datetime
 from store.models import Profile
+from decimal import Decimal
 
 class Cart():
     def __init__(self, request):
@@ -37,17 +38,18 @@ class Cart():
             #save carty to user profile model
             current_user.update(old_cart=str(carty))
       
-    def add(self, product,quantity, size):
+    def add(self, product,quantity):
       
         product_id = str(product.id)
         product_qty = str(quantity)
-        product_size = str(size)
+        
         # Logic
         if product_id in self.cart:
             pass
         else:
            
-            self.cart[product_id] = int(product_qty)
+             self.cart[product_id] = product_qty
+          
 
         self.session.modified = True
         
@@ -76,6 +78,7 @@ class Cart():
     def get_quants(self):
         quantities = self.cart
         return quantities
+    
     
     def update(self, product, quantity):
         product_id = str(product)
@@ -119,21 +122,22 @@ class Cart():
             current_user.update(old_cart=str(carty))
         
     def cart_total(self):
-        #get prod id
+         #get prod id
         product_id= self.cart.keys()
         #lookup those keys in our products db models
         products = Product.objects.filter(id__in=product_id)
         #get quantities
         quantities = self.cart
-        total = 0 #initializing at 0
+        total = Decimal('0') #initializing at 0
         for key, value in quantities.items():
             key = int(key)#convert into int from str
             for product in products:
                 if product.id == key:
+                  
                     if product.is_sale:
-                        total = (total + product.sale_price * value)
+                        total = (total + product.sale_price * Decimal(value))
                     else:
-                        total = (total + product.price * value)
+                        total = (total + product.price * Decimal(value))
         
         
         return total

@@ -28,7 +28,7 @@
             <td>{{ order.email }}</td>
             <td>{{ order.date_ordered}}</td>
             <td>{{ order.amount_paid}}</td>
-            <td>{{ order.shipped}}</td>
+            <td>{{ order.status}}</td>
             <td><a href = "{% url 'order_edit' order.pk %}" class=" btn btn-outline-secondary">View </a></td>
             <td><a href="{% url 'order_delete' order.pk %}"  class=" btn btn-outline-danger">Delete</a></td>
 

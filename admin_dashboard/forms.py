@@ -64,7 +64,7 @@ class OrderForm(forms.ModelForm):
     """A form to create an order."""
     class Meta:
         model = Order
-        fields = ['user', 'fullname', 'email', 'shipping_address', 'amount_paid', 'shipped']
+        fields = ['user', 'fullname', 'email', 'shipping_address', 'amount_paid', 'status']
         
 
 class OrderItemForm(forms.ModelForm):

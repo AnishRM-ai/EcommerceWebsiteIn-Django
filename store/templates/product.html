@@ -16,13 +16,6 @@
               <p class="card-text">{{product.description}}</p>
 
               {% if product.is_sale %}
-              <div class="d-flex justify-content-center small text-warning mb-2">
-                <div class="bi-star-fill"></div>
-                <div class="bi-star-fill"></div> 
-                <div class="bi-star-fill"></div>
-                <div class="bi-star-fill"></div>
-                <div class="bi-star-fill"></div>
-            </div>
             <!-- Product price-->
             <span class="text-muted text-decoration-line-through">Npr {{product.price}}</span><br>
             Npr {{product.sale_price}}
@@ -45,18 +38,7 @@
                       </select>
                     </div>
                     </div>
-
-                     <!-- Add size selection -->
-              <div class="row justify-content mt-2">
-                <div class="col-md-2">Size:</div>
-                <div class="col-md-2">
-                  <select class="form-select form-select-sm" id="size-select">
-                    {% for sizes in size %}
-                      <option value="{{ size }}">{{ sizes.size }}"</option>
-                     
-                    {% endfor %}
-                  </select>
-                </div>
+              
               </div>
               
               <p class="card-text"><small class="text-body-secondary">{{product.date}}</small></p>
@@ -82,9 +64,8 @@ $(document).on('click', '#add-cart', function(e){
       data: {
         product_id: $('#add-cart').val(),
         product_qty: $('#qty-cart option:selected').text(),
-        product_size: $('#size-select option:selected').text(),
         csrfmiddlewaretoken: '{{ csrf_token }}',
-        action: 'post'
+        action: 'POST',
       },
 success: function(json){
   console.log(json)

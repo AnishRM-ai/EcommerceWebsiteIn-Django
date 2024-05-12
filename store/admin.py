@@ -1,12 +1,11 @@
 from django.contrib import admin
-from . models import Category, Customer, Product, Order , Profile, ClothingSize, Subcategory
+from . models import Category, Customer, Product, Order , Profile, Subcategory
 from django.contrib.auth.models import User
 
 
 # Register your models here.
 admin.site.register(Category)
 admin.site.register(Subcategory)
-admin.site.register(ClothingSize)
 admin.site.register(Customer)
 admin.site.register(Product)
 admin.site.register(Order)

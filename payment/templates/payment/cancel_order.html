@@ -1,0 +1,34 @@
+{%extends 'base.html' %}
+{%block content%}
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder"> Billing Information</h1>
+          
+        </div>
+    </div>
+</header>
+<center>
+    <div class="col-5 text-lg-start mb-3 my-5">
+        
+        
+
+    <div class="card">
+        <div class="card-header">
+          <p>Are You Sure you want to cancel the Order?</p> 
+
+        </div>
+        <div class="card-body">
+        <form method="POST">
+            {%csrf_token%}
+            {{form.as_p}}
+            <button type="submit" class="btn btn-outline-danger">Cancel Order</button>
+            <a href="{% url 'order_tracking' %}" class="btn btn-outline-secondary">Go Back</a>
+        </form>
+      </div>
+    </div>
+</div>
+<center>
+{% endblock %}
+
+

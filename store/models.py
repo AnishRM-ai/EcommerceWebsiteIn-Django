@@ -4,18 +4,6 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
 
-#Clothes size 
-
-class ClothingSize(models.Model):
-    CHOICES = (('S', 'Small'),
-               ('M','Medium'),
-               ('L', 'Large'),
-               ('XL', 'Extra Large'))
-    size = models.CharField(max_length=2, choices=CHOICES, default='M')
-    
-
-    def __str__(self):
-        return self.size
         
 
 

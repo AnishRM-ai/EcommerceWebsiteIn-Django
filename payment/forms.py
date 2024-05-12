@@ -1,5 +1,5 @@
 from django import forms
-from .models import ShippingAddress
+from .models import ShippingAddress, CancellationOrder
 
 class ShippingForm(forms.ModelForm):
     shipping_fullname = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Full Name'}), required=True)
@@ -29,3 +29,14 @@ class PaymentForm(forms.Form):
      card_state = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Billing State'}), required=True)
      card_zipcode = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Billing Zipcode'}), required=False)
      card_country = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Billing Country'}), required=True)
+     
+     
+class CancellationForm(forms.ModelForm):
+     class Meta():
+         model = CancellationOrder
+         fields = ['reason']
+         
+     
+         
+         
+    

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Product
-from .models import Category, Profile, ClothingSize, Subcategory
+from .models import Category, Profile, Subcategory
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -14,8 +14,7 @@ from payment.forms import ShippingForm
 from payment.models import ShippingAddress
 import json
 from cart.cart import Cart
-
-
+    
 
 
 
@@ -247,8 +246,7 @@ def product(request, pk):
     """
     
     product = Product.objects.get(id = pk)
-    sizes = ClothingSize.objects.all()
-    return render(request, 'product.html', {'product': product, 'size':sizes})
+    return render(request, 'product.html', {'product': product, })
 
 #function to display home page.
 def home(request):
