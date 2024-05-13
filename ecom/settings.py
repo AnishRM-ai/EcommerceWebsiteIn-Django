@@ -69,6 +69,7 @@ TEMPLATES = [
                 'cart.context_processor.cart',
                 'store.context_processor.user_order_notify',
                 'admin_dashboard.context_processor.order_notify',
+                'admin_dashboard.context_processor.cancel_notify',
             ],
         },
     },

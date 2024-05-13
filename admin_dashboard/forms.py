@@ -1,6 +1,6 @@
 from django import forms
 from store.models import Product, Category
-from payment.models import Order, OrderItem
+from payment.models import Order, OrderItem, CancellationOrder
 from django.forms import formset_factory
 from django.forms.models import inlineformset_factory
 class ProductForm(forms.ModelForm):
@@ -76,3 +76,15 @@ class OrderItemForm(forms.ModelForm):
 
 
 OrderItemFormSet = inlineformset_factory(Order, OrderItem, fields=('product', 'quantity', 'price','user', 'order' ), extra=0)
+
+class CancelationForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CancelationForm, self).__init__(*args, **kwargs)
+        # Set the 'reason', and 'order' fields to be non-editable
+        self.fields['reason'].widget.attrs['readonly'] = True
+        self.fields['order'].widget.attrs['readonly'] = True
+
+    class Meta:
+        model = CancellationOrder
+        fields = ['order', 'reason', 'mark_as_read']
+        

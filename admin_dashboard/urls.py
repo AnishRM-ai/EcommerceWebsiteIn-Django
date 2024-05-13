@@ -12,5 +12,6 @@ urlpatterns = [
     path('order_list', views.order_list, name="order_list"),
     path('order_list/<int:pk>/order_edit', views.order_edit, name="order_edit"),
     path('order_list/<int:pk>/order_delete', views.order_delete, name="order_delete"),
-    
+    path('canceled_order', views.canceled_order, name="canceled_order"),
+    path('canceled_view/<int:pk>', views.cancel_details, name="canceled_view"),
 ]

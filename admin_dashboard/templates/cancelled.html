@@ -1,0 +1,42 @@
+{% extends "dashbase.html" %}
+
+
+{% block content%}
+{% include "layout.html" %}
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Canceled Order </th>
+            <th scope="col">Seen </th>
+          
+          </tr>
+        </thead>
+        <tbody>
+          {% for can_order in canceled_order %}
+          <tr>
+            <td>{{ can_order }}</td>
+            <td>{{ can_order.mark_as_read }}</td>
+           
+            <td>
+              <a class="btn btn-outline-dark me-2" href="{% url 'canceled_view' can_order.pk %}">View</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+</main>
+</div>
+
+
+</br></br></br>
+{% endblock %}

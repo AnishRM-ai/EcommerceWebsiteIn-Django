@@ -7,9 +7,27 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django import forms
 from django.db.models import Q
-from .forms import ProductForm, OrderForm, OrderItemForm, OrderItemFormSet
-from payment.models import Order, OrderItem
+from .forms import ProductForm, OrderForm, OrderItemForm, OrderItemFormSet, CancelationForm
+from payment.models import Order, OrderItem, CancellationOrder
 from django.contrib.auth.models import User
+
+
+#Function to display list of canceled order
+def canceled_order(request):
+    canceled_ord = CancellationOrder.objects.all()
+    return render(request, 'cancelled.html', {"canceled_order": canceled_ord})
+
+#function to display the canceled order details
+def cancel_details(request, pk):
+    cancel_order = get_object_or_404(CancellationOrder, id=pk)
+    if request.method == 'POST':
+        form = CancelationForm(request.POST, instance=cancel_order)
+        if form.is_valid():
+            form.save()
+            return redirect('canceled_order')
+    else:
+        form = CancelationForm(instance=cancel_order)
+    return render(request, "canceled_details.html", {'cancel_form':form})
 
 #Function to create Order
 def create_order(request):

@@ -31,12 +31,17 @@
                                 
                             <a class="nav-link" href="{% url 'order_list'  %}">Order List <sup>{{notification_count}}</sup></a>
                             <a class="nav-link" href="{% url 'create_order'%}">Create Order</a>
+                           
                             
                 </div>
+
+
+                    <i class="bi bi-x-square"><a class="nav-link" href="{% url 'canceled_order'%}">Canceled Order <sup>{{cancel_count}}</sup></a></i>
+              
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small">Logged in as:</div>
-                Start Bootstrap
+              {{ user.username }}
             </div>
         </nav>
     </div> 

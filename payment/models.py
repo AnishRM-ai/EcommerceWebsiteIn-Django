@@ -67,4 +67,8 @@ class CancellationOrder(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     reason = models.TextField(blank=True)
     cancelled_date = models.DateTimeField(auto_now_add=True)
+    mark_as_read = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return f'Canceled Order - {str(self.id)}'
         

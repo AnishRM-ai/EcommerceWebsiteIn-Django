@@ -35,10 +35,20 @@
                         <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                             <a class="nav-link" href="{% url 'order_list'  %}">Order List <sup>{{notification_count}}</sup></a>
                             <a class="nav-link" href="{% url 'create_order'%}">Create Order</a>
+                           
                             
                            
                         </nav>
                     </div>
+
+                  
+                        <i class="bi bi-x-square"><a class="nav-link" href="{% url 'canceled_order'%}">Canceled Order <sup>{{cancel_count}}</sup></a></i>
+                           
+                            
+                           
+                       
+                  
+                    
                 
             <div class="sb-sidenav-footer">
                 <div class="small">Logged in as: {{current_user_name}} </div>
