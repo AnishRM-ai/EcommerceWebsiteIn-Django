@@ -174,23 +174,34 @@ def payment_sucess(request):
 
 #Checkout Page
 def check_out(request):
-    # Get Cart
+   # Get Cart
     cart = Cart(request)
     cart_products = cart.get_prods
     quantities = cart.get_quants
     totals = cart.cart_total()
-    
-    if request.user.is_authenticated:
-        #Checkout as user
-        #Shipping User
-        shipping_user = ShippingAddress.objects.get(user=request.user)
-        #Shipping Form
-        shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
-        return render(request, "payment/checkout.html", {'cart_products': cart_products,   "quantities": quantities, "totals": totals, "shipping_form": shipping_form})
-    else:
-        #Checkout as guest
-        shipping_form = ShippingForm(request.POST or None)
-        return render(request, "payment/checkout.html", {'cart_products': cart_products,   "quantities": quantities, "totals": totals,"shipping_form": shipping_form })
 
+    if request.user.is_authenticated:
+        # Checkout as user
+        try:
+            shipping_user = ShippingAddress.objects.get(user=request.user)
+        except ShippingAddress.DoesNotExist:
+            shipping_user = ShippingAddress(user=request.user)
+        shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
+    else:
+        # Checkout as guest
+        shipping_form = ShippingForm(request.POST or None)
+
+    if request.method == "POST":
+        if shipping_form.is_valid():
+            shipping_form.save()
+            # Redirect to a success page or payment processing page
+            return redirect('payment:process')  # Assuming you have a named URL for payment processing
+
+    return render(request, "payment/checkout.html", {
+        'cart_products': cart_products,
+        'quantities': quantities,
+        'totals': totals,
+        'shipping_form': shipping_form
+    })
 
    
