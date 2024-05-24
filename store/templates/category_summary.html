@@ -17,25 +17,28 @@
     {% endif %}
     <div class="col-lg-4 col-md-6 mb-4"> <!-- Bootstrap column classes -->
         {% if category.parent %}
-        
+        <a href="{% url 'category' category %}" class="text-decoration-none">
         <div class="card mt-5" style="width: 18rem;"> <!-- Added margin top -->
             <img src="{{ category.category_image.url }}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ category }}</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="{% url 'category' category %}" class="btn btn-primary">Explore</a>
+                
+                
             </div>
         </div>
+    </a>
 
         {% else %}
+        <a href="{% url 'category' category %}" class="text-decoration-none">
         <div class="card mt-5" style="width: 18rem;"> <!-- Added margin top -->
             <img src="{{ category.category_image.url }}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ category }}</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="{% url 'category' category %}" class="btn btn-primary">Explore</a>
+               
+               
             </div>
         </div>
+    </a>
         {% endif %}
     </div>
     {% if forloop.last or forloop.counter0|add:1|divisibleby:3 %}
