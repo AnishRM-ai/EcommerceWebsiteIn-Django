@@ -74,7 +74,7 @@ def admin_dash(request):
     order_pending = Order.objects.filter(status='Pending').count()
     users = User.objects.count()
     current_user_name = request.user.username
-    return render(request, 'dashboard.html', {'count': product, 'order_count': orders, 'pending_order': order_pending, 'user':users, 'current_user_name': current_user_name})
+    return render(request, 'dashboard.html', {'count': product, 'order_count': orders, 'pending_order': order_pending, 'usercount':users, 'current_user_name': current_user_name})
 
 def productManage(request):
     return render(request, 'productadd.html', {})

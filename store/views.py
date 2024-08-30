@@ -16,7 +16,7 @@ import json
 from cart.cart import Cart
     
 
-
+    
 
 #Seller Admin  Panel
 def login_view(request):
@@ -246,7 +246,10 @@ def product(request, pk):
     """
     
     product = Product.objects.get(id = pk)
-    return render(request, 'product.html', {'product': product, })
+    categories = Category.objects.all()
+    related_products = Product.objects.filter(category=product.category).exclude(id=product.id)[:4]
+
+    return render(request, 'product.html', {'product': product,'related_product': related_products })
 
 #function to display home page.
 def home(request):
